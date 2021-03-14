@@ -25,7 +25,7 @@ public class ConfigManager {
         }
     }
 
-    public void addConfigContent() {
+    private void addConfigContent() {
 
         // TeamChat Command
         ArrayList<String> teamchatAliases = new ArrayList<>();
@@ -39,7 +39,7 @@ public class ConfigManager {
         saveConfig();
     }
 
-    public void saveConfig() {
+    private void saveConfig() {
         try {
             cfg.save(config);
             cfg = YamlConfiguration.loadConfiguration(config);

@@ -23,7 +23,7 @@ public class MessageManager {
         }
     }
 
-    public void addConfigContent() {
+    private void addConfigContent() {
         cfg.set("Prefix", "&cBungeeSystem &8| &7");
         cfg.set("MissingPermission", "{prefix} &cYou don't have permissions!");
         // TeamChat Command
@@ -33,7 +33,7 @@ public class MessageManager {
         saveConfig();
     }
 
-    public void saveConfig() {
+    private void saveConfig() {
         try {
             cfg.save(config);
             cfg = YamlConfiguration.loadConfiguration(config);
