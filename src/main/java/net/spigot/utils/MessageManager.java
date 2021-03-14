@@ -16,9 +16,47 @@ public class MessageManager {
         if(!config.exists()) {
             try {
                 config.createNewFile();
+                addConfigContent();
             } catch (IOException exception) {
                 exception.printStackTrace();
             }
         }
     }
+
+    public void addConfigContent() {
+        cfg.set("Prefix", "&cBungeeSystem &8| &7");
+        cfg.set("MissingPermission", "{prefix} &cYou don't have permissions!");
+        // TeamChat Command
+        cfg.set("TeamChat.format", "{prefix} &8[&7{server}&8] &e{player} &8-> &f{message}");
+        //
+
+        saveConfig();
+    }
+
+    public void saveConfig() {
+        try {
+            cfg.save(config);
+            cfg = YamlConfiguration.loadConfiguration(config);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    // GETTING MESSAGES
+    public String getPrefix() {
+        return cfg.getString("Prefix").replaceAll("&", "§");
+    }
+    public String getMissingPermission() {
+        return cfg.getString("MissingPermission").replaceAll("&", "§");
+    }
+
+    public String getTeamChatFormat(String server, String playerName, String message) {
+        return cfg.getString("TeamChat.format").
+                replaceAll("&", "§").
+                replace("{prefix}", getPrefix()).
+                replace("{server}", server).
+                replace("{player}", playerName).
+                replace("{message}", message);
+    }
+    //
 }
