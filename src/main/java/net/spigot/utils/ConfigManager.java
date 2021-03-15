@@ -1,6 +1,8 @@
 package net.spigot.utils;
 
-import org.simpleyaml.configuration.file.YamlConfiguration;
+import net.md_5.bungee.config.Configuration;
+import net.md_5.bungee.config.ConfigurationProvider;
+import net.md_5.bungee.config.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +11,15 @@ import java.util.ArrayList;
 public class ConfigManager {
     public File folder = new File("plugins/BungeeSystem");
     public File config = new File("plugins/BungeeSystem/Config.yml");
-    public YamlConfiguration cfg = YamlConfiguration.loadConfiguration(config);
+    public Configuration cfg;
+
+    {
+        try {
+            cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(config);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
 
     // Core
     public void createFilesIfNotExists() {
@@ -41,8 +51,8 @@ public class ConfigManager {
 
     private void saveConfig() {
         try {
-            cfg.save(config);
-            cfg = YamlConfiguration.loadConfiguration(config);
+            ConfigurationProvider.getProvider(YamlConfiguration.class).save(cfg, config);
+            cfg = ConfigurationProvider.getProvider(YamlConfiguration.class).load(config);
         } catch (IOException exception) {
             exception.printStackTrace();
         }
